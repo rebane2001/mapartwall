@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <title>MapartWall</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="MapartWall">
+    <meta name="author" content="rebane2001">
+    <link rel="stylesheet" href="css/app.css">
+    <script src="js/app.js" type="text/javascript"></script>
+    <script src="https://mapartwall.rebane2001.com/hashes.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <h1>MapartWall</h1>
+    <h3><a href="https://rebane2001.com/mapartcraft" target="_blank" rel="noopener">MapartCraft</a> | <a href="https://discord.gg/r7Tuerq" target="_blank" rel="noopener">2b2t Mapart Discord</a></h3>
+    <p>MapartWall is a website that shows <b>all</b> the maps currently on <a href="https://www.reddit.com/r/2b2t/" target="_blank" rel="noopener">2b2t</a><br>
+    This is a project with the intention of discouraging map resets due to people wanting to build their own map walls, as well as just a cool site for peole to browse around on<br>
+    Note: All of the images on this site are unmoderated and copied over straight from the Minecraft server - <font color="red">this might include nsfw and otherwise uncomfortable or offensive content, viewer discretion is advised</font></p>
+
+    <p>
+    <img src="img/button_id.png" onclick="showId()" style="cursor: pointer" />
+    <img src="img/button_dupe.png" id="button_dupe" onclick="showDupe()" style="cursor: pointer" />
+    <br>Maps last updated: <i><span id="lastupdatedtxt">...</span></i>
+    </p>
+
+    <div id="maparts"></div>
+
+    <div id="mapModal" class="modal">
+      <div class="modal-content">
+        <span class="modaltxt">ID:</span>
+        <span class="modalbtn close">&times;</span>
+        <span class="modalbtn download">⇩</span>
+        <img src="https://mapartwall.rebane2001.com/mapimg/map_0.png" class="modalimg" />
+      </div>
+    </div>
+
+  </body>
+</html>
