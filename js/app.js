@@ -78,7 +78,7 @@ function download(url) {
       const a = document.createElement('a');
       a.style.display = 'none';
       a.href = bloburl;
-      a.download = url.split("/").pop();
+      a.download = url.split("/").pop().split("?")[0];
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(bloburl);
