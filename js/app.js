@@ -30,6 +30,9 @@ function initialize() {
   dlbtn.onclick = function() {
     downloadModal();
   }
+
+  if(window.location.hash)
+    mapClick(parseInt(window.location.hash.substring(1), 10));
 }
 
 function renderNoDupe() {
@@ -64,6 +67,7 @@ function mapClick(id) {
   modalimg.src = "https://mapartwall.rebane2001.com/mapimg/map_" + id + ".png?v=" + lastupdated;
   modaltxt.innerText = "ID: " + id;
   modal.style.display = "block";
+  history.pushState(null, null, '#' + id);
 }
 
 document.addEventListener("DOMContentLoaded", function() {
