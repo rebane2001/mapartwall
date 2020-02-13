@@ -20,11 +20,13 @@ function initialize() {
   window.onclick = function(event) {
     if (event.target == modal) {
       modal.style.display = "none";
+      history.pushState(null, null, window.location.pathname);
     }
   }
 
   closebtn.onclick = function() {
     modal.style.display = "none";
+    history.pushState(null, null, window.location.pathname);
   }
 
   dlbtn.onclick = function() {
