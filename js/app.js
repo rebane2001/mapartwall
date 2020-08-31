@@ -63,8 +63,11 @@ function renderMaps(maps) {
     imgblock += `<img src="https://mapartwall.rebane2001.com/mapimg/map_${maps[i]}.png?v=${lastupdated}" loading="lazy" class="mapartimg" width="128" height="128" title="ID: ${maps[i]}" alt="ID: ${maps[i]}" onclick="mapClick(${maps[i]})" onerror="reloadImage(this)" />`;
   }
   document.getElementById('maparts').innerHTML = imgblock;
-  $(".mapartimg").attr("height", 128/window.devicePixelRatio);
-  $(".mapartimg").attr("width", 128/window.devicePixelRatio);
+  var mapartimgvar = document.querySelectorAll('.mapartimg');
+  for (var i=0; i < mapartimgvar.length; i++) {
+    mapartimgvar[i].setAttribute("width", 128/window.devicePixelRatio);
+	mapartimgvar[i].setAttribute("height", 128/window.devicePixelRatio);
+}
 }
 
 function mapClick(id) {
