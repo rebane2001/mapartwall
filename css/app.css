@@ -29,8 +29,6 @@ a, a:visited {
 }
 
 .mapartimg {
-  height: 128px;
-  width: 128px;
   cursor: pointer;
   display: inline-block;
   image-rendering: auto;
