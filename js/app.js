@@ -1,23 +1,26 @@
 var modal;
 var modalimg;
 var modaltxt;
+var data;
 
 function initialize() {
-  document.getElementById("lastupdatedtxt").innerHTML = new Date(lastupdated*1000).toLocaleString();;
+  const dateStart = new Date(data.timestamp[1]).toLocaleString("sv-SE", {"dateStyle": "short", "timeStyle": "short"});
+  const dateEnd = new Date(data.timestamp[1]).toLocaleString("sv-SE", {"timeStyle": "short"});
+  const dateStr = `from ${dateStart} to ${dateEnd}`;
+  document.getElementById("lastupdatedtxt").innerHTML = dateStr;
 
-  if (!checkCookie())
-    return;
+  if (!checkCookie()) return;
 
   renderNoDupe();
 
   // Modal stuff
-  modal = document.getElementById("mapModal");
-  modalimg = document.getElementsByClassName("modalimg")[0];
-  modaltxt = document.getElementsByClassName("modaltxt")[0];
-  let closebtn = document.getElementsByClassName("close")[0];
-  let dlbtn = document.getElementsByClassName("download")[0];
+  modal = document.querySelector("#mapModal");
+  modalimg = document.querySelector(".modalimg");
+  modaltxt = document.querySelector(".modaltxt");
+  const closebtn = document.querySelector(".close");
+  const dlbtn = document.querySelector(".download");
 
-  window.onclick = function(event) {
+  window.onclick = (event) => {
     if (event.target == modal) {
       modal.style.display = "none";
       history.pushState(null, null, window.location.pathname);
@@ -38,20 +41,18 @@ function initialize() {
 }
 
 function renderNoDupe() {
-  if (!checkCookie())
-    return;
+  if (!checkCookie()) return;
   maps = [];
-  for (let hash in hashes) {
-    maps.push(hashes[hash][0].split("_")[1]);
+  for (const hash in data.hashes) {
+    maps.push(data.hashes[hash][0].split("_")[1]);
   }
   renderMaps(maps);
 }
 
 function renderDupe() {
-  if (!checkCookie())
-    return;
+  if (!checkCookie()) return;
   maps = [];
-  for (let i = 0; i < 32768; i++) {
+  for (const i = 0; i < 32768; i++) {
     maps.push(i);
   }
   renderMaps(maps);
@@ -59,20 +60,21 @@ function renderDupe() {
 
 function renderMaps(maps) {
   imgblock = "";
-  for (let i = 0; i < maps.length; i++) {
-    imgblock += `<img src="https://mapartwall.rebane2001.com/mapimg/map_${maps[i]}.png?v=${lastupdated}" loading="lazy" class="mapartimg" width="128" height="128" title="ID: ${maps[i]}" alt="ID: ${maps[i]}" onclick="mapClick(${maps[i]})" onerror="reloadImage(this)" />`;
+  for (const i = 0; i < maps.length; i++) {
+    imgblock += `<img src="https://mapartwall.rebane2001.com/mapimg/map_${maps[i]}.png?v=${lastupdated[1]}" loading="lazy" class="mapartimg" width="128" height="128" title="ID: ${maps[i]}" alt="ID: ${maps[i]}" onclick="mapClick(${maps[i]})" onerror="reloadImage(this)" />`;
   }
   document.getElementById('maparts').innerHTML = imgblock;
 }
 
 function mapClick(id) {
-  modalimg.src = "https://mapartwall.rebane2001.com/mapimg/map_" + id + ".png?v=" + lastupdated;
-  modaltxt.innerText = "ID: " + id;
+  modalimg.src = "https://mapartwall.rebane2001.com/mapimg/map_" + id + ".png?v=" + lastupdated[1];
+  modaltxt.innerText = `ID: ${id} @ ${new Date(data.timestamps[id]).toLocaleString("sv-SE", {"timeStyle": "short"})}`;
   modal.style.display = "block";
   history.pushState(null, null, '#' + id);
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+fetch("https://mapartwall.rebane2001.com/hashes.js").then(r => r.json()).then(j => {
+  data = j;
   initialize();
 });
 
@@ -89,7 +91,7 @@ function download(url) {
       a.click();
       window.URL.revokeObjectURL(bloburl);
     })
-    .catch(() => alert('Error downloading ' + fileName));
+    .catch(() => alert(`Error downloading ${fileName}`));
 }
 
 function downloadModal() {
@@ -99,37 +101,39 @@ function downloadModal() {
 // CDN sometimes doesn't load images, this reloads them on error
 function reloadImage(image) {
   console.log("Reloading image...");
-  setTimeout(function(image){ image.src = image.src; }, 1000, image);
+  setTimeout((image) => { image.src = image.src; }, 1000, image);
 }
 
 // Website main buttons
 function showId(){
-  let id = prompt("Please enter the map ID you wish to see", "0");
-  if (id != null) {
-    if (id >= 0 && id < 32768)
-      mapClick(id);
-    else
+  const map_id = prompt("Please enter the map ID you wish to see", "0");
+  if (map_id != null) {
+    if (map_id >= 0 && map_id < 32768) {
+      mapClick(map_id);
+    } else {
       alert("Invalid map ID");
+    }
   }
 }
 
 function showDupe(){
-  if(!confirm(`Are you sure you wish to load ALL 32768 maps (you already see all ${document.getElementsByClassName("mapartimg").length} of them that aren't duplicates)?`)) return;
-  let button = document.getElementById("button_dupe");
+  const accept = confirm(`Are you sure you wish to load ALL 32768 maps (you already see all ${document.getElementsByClassName("mapartimg").length} of them that aren't duplicates)?`);
+  if(!accept) return;
+  const button = document.getElementById("button_dupe");
   button.parentNode.removeChild(button);
   renderDupe();
 }
 
 // Content warning
 function checkCookie() {
-    if (getCookie("contentwarning") == "accepted"){
-      return true;
-    }else{
-      if(!confirm("All of the images on this site are unmoderated and copied over straight from the Minecraft server - this might include nsfw and otherwise uncomfortable or offensive content - do you wish to proceed?")){
-        document.documentElement.innerHTML = "Error: User did not accept content warning";
-        return false;
-      }
-      setCookie("contentwarning", "accepted", 9000);
+    if (getCookie("mapartwall_contentwarning") === "accepted") return true;
+
+    const accept = confirm("All of the images on this site are unmoderated and copied over straight from the Minecraft server - this might include nsfw and otherwise uncomfortable or offensive content - do you wish to proceed?");
+    if (accept) {
+      document.documentElement.innerHTML = "Error: User did not accept content warning";
+      return false;
+    } else {
+      setCookie("mapartwall_contentwarning", "accepted", 9000);
       return true;
     }
 }
