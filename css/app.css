@@ -67,7 +67,25 @@ a, a:visited {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height:80%;
+  line-height: 0;
+}
+
+@media (min-aspect-ratio: 1/1) {
+  .modal-content {
+    height:80%;
+  }
+  .modalimg {
+    height:100%;
+  }
+}
+
+@media (max-aspect-ratio: 1/1) {
+  .modal-content {
+    width:80%;
+  }
+  .modalimg {
+    width:100%;
+  }
 }
 
 .modaltxt {
@@ -106,7 +124,6 @@ a, a:visited {
 
 /* Mapart inside the modal */
 .modalimg {
-  height:100%;
   image-rendering: auto;
   image-rendering: crisp-edges;
   image-rendering: pixelated;
