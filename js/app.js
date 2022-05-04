@@ -73,7 +73,7 @@ function mapClick(id) {
   history.pushState(null, null, '#' + id);
 }
 
-fetch("https://mapartwall.rebane2001.com/hashes.js").then(r => r.json()).then(j => {
+fetch("https://mapartwall.rebane2001.com/hashes.js?" + Date.now()).then(r => r.json()).then(j => {
   data = j;
   initialize();
 });
