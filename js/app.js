@@ -162,3 +162,16 @@ function getCookie(cname) {
   }
   return "";
 }
+
+function switchImage(next) {
+  const currentImage = document.querySelector(`.mapartimg[src='${document.querySelector(".modalimg").src}']`);
+  const targetSibling = (next ? currentImage.nextSibling : currentImage.previousSibling) ?? (next ? document.querySelector("#maparts").firstChild : document.querySelector("#maparts").lastChild);
+  document.querySelector(".modalimg").src = null;
+  targetSibling.onclick();
+}
+
+document.onkeydown = (e) => {
+  if (e.keyCode == '37') switchImage(false);
+  if (e.keyCode == '39') switchImage(true);
+  if (e.keyCode == '27') document.querySelector(".close").onclick();
+}
