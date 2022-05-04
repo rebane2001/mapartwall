@@ -61,13 +61,13 @@ function renderDupe() {
 function renderMaps(maps) {
   imgblock = "";
   for (const i = 0; i < maps.length; i++) {
-    imgblock += `<img src="https://mapartwall.rebane2001.com/mapimg/map_${maps[i]}.png?v=${lastupdated[1]}" loading="lazy" class="mapartimg" width="128" height="128" title="ID: ${maps[i]}" alt="ID: ${maps[i]}" onclick="mapClick(${maps[i]})" onerror="reloadImage(this)" />`;
+    imgblock += `<img src="https://mapartwall.rebane2001.com/mapimg/map_${maps[i]}.png?v=${data.lastupdated[1]}" loading="lazy" class="mapartimg" width="128" height="128" title="ID: ${maps[i]}" alt="ID: ${maps[i]}" onclick="mapClick(${maps[i]})" onerror="reloadImage(this)" />`;
   }
   document.getElementById('maparts').innerHTML = imgblock;
 }
 
 function mapClick(id) {
-  modalimg.src = "https://mapartwall.rebane2001.com/mapimg/map_" + id + ".png?v=" + lastupdated[1];
+  modalimg.src = "https://mapartwall.rebane2001.com/mapimg/map_" + id + ".png?v=" + data.lastupdated[1];
   modaltxt.innerText = `ID: ${id} @ ${new Date(data.timestamps[id]).toLocaleString("sv-SE", {"timeStyle": "short"})}`;
   modal.style.display = "block";
   history.pushState(null, null, '#' + id);
