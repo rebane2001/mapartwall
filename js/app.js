@@ -52,7 +52,7 @@ function renderNoDupe() {
 function renderDupe() {
   if (!checkCookie()) return;
   maps = [];
-  for (const i = 0; i < 32768; i++) {
+  for (let i = 0; i < 32768; i++) {
     maps.push(i);
   }
   renderMaps(maps);
@@ -60,7 +60,7 @@ function renderDupe() {
 
 function renderMaps(maps) {
   imgblock = "";
-  for (const i = 0; i < maps.length; i++) {
+  for (let i = 0; i < maps.length; i++) {
     imgblock += `<img src="https://mapartwall.rebane2001.com/mapimg/map_${maps[i]}.png?v=${data.lastupdated[1]}" loading="lazy" class="mapartimg" width="128" height="128" title="ID: ${maps[i]}" alt="ID: ${maps[i]}" onclick="mapClick(${maps[i]})" onerror="reloadImage(this)" />`;
   }
   document.getElementById('maparts').innerHTML = imgblock;
