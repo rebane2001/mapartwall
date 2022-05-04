@@ -4,7 +4,7 @@ var modaltxt;
 var data;
 
 function initialize() {
-  const dateStart = new Date(data.lastupdated[1]).toLocaleString("sv-SE", {"dateStyle": "short", "timeStyle": "short"});
+  const dateStart = new Date(data.lastupdated[0]).toLocaleString("sv-SE", {"dateStyle": "short", "timeStyle": "short"});
   const dateEnd = new Date(data.lastupdated[1]).toLocaleString("sv-SE", {"timeStyle": "short"});
   const dateStr = `from ${dateStart} to ${dateEnd}`;
   document.getElementById("lastupdatedtxt").innerHTML = dateStr;
