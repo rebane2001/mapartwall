@@ -130,11 +130,11 @@ function checkCookie() {
 
     const accept = confirm("All of the images on this site are unmoderated and copied over straight from the Minecraft server - this might include nsfw and otherwise uncomfortable or offensive content - do you wish to proceed?");
     if (accept) {
-      document.documentElement.innerHTML = "Error: User did not accept content warning";
-      return false;
-    } else {
       setCookie("mapartwall_contentwarning", "accepted", 9000);
       return true;
+    } else {
+      document.documentElement.innerHTML = "Error: User did not accept content warning";
+      return false;
     }
 }
 
